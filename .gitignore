@@ -1,0 +1,9 @@
+data/
+results/*
+!results/.gitkeep
+*.pt
+*.index
+__pycache__/
+.venv/
+.DS_Store
+*.egg-info/
