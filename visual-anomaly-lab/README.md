@@ -44,7 +44,7 @@ docker buildx build --platform linux/amd64 -t visual-anomaly-lab:<tag in compose
 docker compose -f compose.prod.yml up -d --no-build
 ```
 
-Append `deploy/Caddyfile.vision` to the Signals Caddyfile, validate it, then reload Caddy. Keep this app in its own Compose project so a Signals deployment using `--remove-orphans` does not remove it. Port 8766 is bound only to localhost; visitors use HTTPS through Caddy. Model weights and samples are mounted read-only. The container has a 1.5 GiB memory limit, a 2 GiB RAM-plus-swap limit, and a 1.5 CPU limit.
+Copy `deploy/Caddyfile.vision` to `deploy/sites/vision.caddy` in the Signals deployment directory on the server. Signals' Caddyfile imports `deploy/sites/*.caddy`, and its CI deploy never overwrites that directory; do not append the block to the Signals Caddyfile, which every Signals deploy replaces. Keep this app in its own Compose project so a Signals deployment using `--remove-orphans` does not remove it. Port 8766 is bound only to localhost; visitors use HTTPS through Caddy. Model weights and samples are mounted read-only. The container has a 1.5 GiB memory limit, a 2 GiB RAM-plus-swap limit, and a 1.5 CPU limit.
 
 Host-specific operations notes are kept outside the repository (`deploy/DEPLOYMENT.md` is git-ignored). User-uploaded inference images are processed in memory and are not saved by this application.
 
