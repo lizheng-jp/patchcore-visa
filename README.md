@@ -96,4 +96,4 @@ PatchCore's memory bank for a 900-image category is about 5.7 GB before coreset 
 
 ## Data and license
 
-VisA is released by Amazon under CC BY 4.0. The dataset is not redistributed in this repository. No proprietary data, code, or weights are used.
+Code in this repository is MIT licensed (`LICENSE`), except the vendored EfficientSAM source in `visual-anomaly-lab/runtime/efficient_sam/`, which keeps its Apache 2.0 license. VisA is released by Amazon under CC BY 4.0. The dataset is not redistributed in this repository, apart from derived example figures in `docs/figures/` and `visual-anomaly-lab/cases/`. No proprietary data, code, or weights are used.
