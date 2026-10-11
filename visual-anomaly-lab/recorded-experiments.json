@@ -1,0 +1,164 @@
+{
+  "scope": "Historical SAM posthoc masking experiments; not the live EfficientSAM demo",
+  "scoring": "Same anomaly map maximum, with or without foreground masking",
+  "threshold_protocol": "max F1 on validation, evaluated on held-out test",
+  "seed": 0,
+  "categories": [
+    {
+      "category": "pcb4",
+      "baseline_dir": "results/E0_baseline/seed0",
+      "defect_pixel_coverage": 0.9581387303234734,
+      "foreground_fraction": 0.30452542281269435,
+      "unmasked_map_max": {
+        "threshold_method": "f1",
+        "image_auroc_official_test": 0.9868316831683168,
+        "image_auroc_test": 0.981764705882353,
+        "val": {
+          "threshold": 30.859375,
+          "n": 100,
+          "anomaly_recall": 0.94,
+          "anomaly_precision": 0.9591836734693877,
+          "normal_specificity": 0.96,
+          "f1": 0.9494949494949495,
+          "accuracy": 0.95,
+          "confusion": {
+            "tn": 48,
+            "fp": 2,
+            "fn": 3,
+            "tp": 47
+          }
+        },
+        "test": {
+          "threshold": 30.859375,
+          "n": 101,
+          "anomaly_recall": 0.92,
+          "anomaly_precision": 0.92,
+          "normal_specificity": 0.9215686274509803,
+          "f1": 0.92,
+          "accuracy": 0.9207920792079208,
+          "confusion": {
+            "tn": 47,
+            "fp": 4,
+            "fn": 4,
+            "tp": 46
+          }
+        },
+        "pixel_auroc_official_test": 0.983854317922254
+      },
+      "masked_map_max": {
+        "threshold_method": "f1",
+        "image_auroc_official_test": 0.9957425742574258,
+        "image_auroc_test": 0.9952941176470589,
+        "val": {
+          "threshold": 27.5,
+          "n": 100,
+          "anomaly_recall": 1.0,
+          "anomaly_precision": 0.9433962264150944,
+          "normal_specificity": 0.94,
+          "f1": 0.970873786407767,
+          "accuracy": 0.97,
+          "confusion": {
+            "tn": 47,
+            "fp": 3,
+            "fn": 0,
+            "tp": 50
+          }
+        },
+        "test": {
+          "threshold": 27.5,
+          "n": 101,
+          "anomaly_recall": 0.98,
+          "anomaly_precision": 0.9607843137254902,
+          "normal_specificity": 0.9607843137254902,
+          "f1": 0.9702970297029703,
+          "accuracy": 0.9702970297029703,
+          "confusion": {
+            "tn": 49,
+            "fp": 2,
+            "fn": 1,
+            "tp": 49
+          }
+        },
+        "pixel_auroc_official_test": 0.9593016526831334
+      }
+    },
+    {
+      "category": "macaroni2",
+      "baseline_dir": "results/E0_baseline/seed0",
+      "defect_pixel_coverage": 1.0,
+      "foreground_fraction": 0.17551956176757813,
+      "unmasked_map_max": {
+        "threshold_method": "f1",
+        "image_auroc_official_test": 0.6415,
+        "image_auroc_test": 0.6024,
+        "val": {
+          "threshold": 28.984375,
+          "n": 100,
+          "anomaly_recall": 0.98,
+          "anomaly_precision": 0.5384615384615384,
+          "normal_specificity": 0.16,
+          "f1": 0.6950354609929078,
+          "accuracy": 0.57,
+          "confusion": {
+            "tn": 8,
+            "fp": 42,
+            "fn": 1,
+            "tp": 49
+          }
+        },
+        "test": {
+          "threshold": 28.984375,
+          "n": 100,
+          "anomaly_recall": 0.94,
+          "anomaly_precision": 0.5164835164835165,
+          "normal_specificity": 0.12,
+          "f1": 0.6666666666666666,
+          "accuracy": 0.53,
+          "confusion": {
+            "tn": 6,
+            "fp": 44,
+            "fn": 3,
+            "tp": 47
+          }
+        },
+        "pixel_auroc_official_test": 0.9659056431044897
+      },
+      "masked_map_max": {
+        "threshold_method": "f1",
+        "image_auroc_official_test": 0.8032,
+        "image_auroc_test": 0.7442,
+        "val": {
+          "threshold": 28.984375,
+          "n": 100,
+          "anomaly_recall": 0.94,
+          "anomaly_precision": 0.746031746031746,
+          "normal_specificity": 0.68,
+          "f1": 0.831858407079646,
+          "accuracy": 0.81,
+          "confusion": {
+            "tn": 34,
+            "fp": 16,
+            "fn": 3,
+            "tp": 47
+          }
+        },
+        "test": {
+          "threshold": 28.984375,
+          "n": 100,
+          "anomaly_recall": 0.82,
+          "anomaly_precision": 0.6721311475409836,
+          "normal_specificity": 0.6,
+          "f1": 0.7387387387387387,
+          "accuracy": 0.71,
+          "confusion": {
+            "tn": 30,
+            "fp": 20,
+            "fn": 9,
+            "tp": 41
+          }
+        },
+        "pixel_auroc_official_test": 0.9934582807654352
+      }
+    }
+  ]
+}

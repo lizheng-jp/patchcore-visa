@@ -1,0 +1,11 @@
+vision.lizheng.cc {
+  encode zstd gzip
+  request_body {
+    max_size 16MB
+  }
+  reverse_proxy vision:8766 {
+    transport http {
+      response_header_timeout 120s
+    }
+  }
+}

@@ -1,0 +1,35 @@
+name: vision-demo
+services:
+  vision:
+    image: visual-anomaly-lab:20261011-layout1
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8766:8766"
+    environment:
+      TORCH_THREADS: "2"
+      BIND_HOST: "0.0.0.0"
+    volumes:
+      - ./models:/app/models:ro
+      - ./samples:/app/samples:ro
+      - ./runtime/weights:/app/runtime/weights:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=67108864,mode=1777
+      - /app/.runtime-cache:size=67108864,uid=10001,gid=10001,mode=0700
+    mem_limit: 1536m
+    memswap_limit: 2048m
+    cpus: 1.5
+    pids_limit: 128
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8766/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    networks:
+      signals:
+        aliases: [vision]
+networks:
+  signals:
+    external: true
+    name: dev-productivity-signals_default

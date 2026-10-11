@@ -1,0 +1,665 @@
+{
+ "category": "macaroni2",
+ "model": "reduced_max200 live model (200 normal training images)",
+ "protocol": "One EfficientSAM prompt point per pasta piece (placed automatically, as a visitor would click), Whole object scope. Score = maximum of the same anomaly map over the full image or inside the foreground. Threshold = max F1 on val, applied once to test.",
+ "n_val": 100,
+ "n_test": 100,
+ "mean_defect_coverage": 0.9991428571428571,
+ "full": {
+  "threshold": 32.399906158447266,
+  "image_auroc_val_test": 0.6339,
+  "accuracy": 0.56,
+  "anomaly_recall": 0.88,
+  "normal_specificity": 0.24,
+  "confusion": {
+   "tn": 12,
+   "fp": 38,
+   "fn": 6,
+   "tp": 44
+  }
+ },
+ "sam": {
+  "threshold": 31.023359298706055,
+  "image_auroc_val_test": 0.7970999999999999,
+  "accuracy": 0.68,
+  "anomaly_recall": 0.82,
+  "normal_specificity": 0.54,
+  "confusion": {
+   "tn": 27,
+   "fp": 23,
+   "fn": 9,
+   "tp": 41
+  }
+ },
+ "cases": [
+  {
+   "key": "false-alarm-removed",
+   "image": "0844.JPG",
+   "label": 0,
+   "full": 37.98469543457031,
+   "sam": 29.906436920166016,
+   "full_max_in_foreground": false,
+   "defect_coverage": null
+  },
+  {
+   "key": "defect-kept",
+   "image": "038.JPG",
+   "label": 1,
+   "full": 40.75521469116211,
+   "sam": 40.75521469116211,
+   "full_max_in_foreground": true,
+   "defect_coverage": 1.0
+  },
+  {
+   "key": "counterexample",
+   "image": "059.JPG",
+   "label": 1,
+   "full": 39.81488037109375,
+   "sam": 28.5124454498291,
+   "full_max_in_foreground": false,
+   "defect_coverage": 1.0
+  }
+ ],
+ "test_points": [
+  {
+   "image": "076.JPG",
+   "label": 1,
+   "full": 33.831,
+   "sam": 30.023
+  },
+  {
+   "image": "013.JPG",
+   "label": 1,
+   "full": 35.479,
+   "sam": 32.336
+  },
+  {
+   "image": "087.JPG",
+   "label": 1,
+   "full": 34.422,
+   "sam": 34.422
+  },
+  {
+   "image": "071.JPG",
+   "label": 1,
+   "full": 40.589,
+   "sam": 40.589
+  },
+  {
+   "image": "048.JPG",
+   "label": 1,
+   "full": 32.268,
+   "sam": 31.298
+  },
+  {
+   "image": "064.JPG",
+   "label": 1,
+   "full": 33.49,
+   "sam": 31.589
+  },
+  {
+   "image": "065.JPG",
+   "label": 1,
+   "full": 34.323,
+   "sam": 33.423
+  },
+  {
+   "image": "015.JPG",
+   "label": 1,
+   "full": 34.932,
+   "sam": 34.932
+  },
+  {
+   "image": "059.JPG",
+   "label": 1,
+   "full": 39.815,
+   "sam": 28.512
+  },
+  {
+   "image": "073.JPG",
+   "label": 1,
+   "full": 32.247,
+   "sam": 31.411
+  },
+  {
+   "image": "007.JPG",
+   "label": 1,
+   "full": 38.991,
+   "sam": 38.991
+  },
+  {
+   "image": "028.JPG",
+   "label": 1,
+   "full": 29.641,
+   "sam": 29.641
+  },
+  {
+   "image": "029.JPG",
+   "label": 1,
+   "full": 38.394,
+   "sam": 31.597
+  },
+  {
+   "image": "086.JPG",
+   "label": 1,
+   "full": 37.885,
+   "sam": 30.819
+  },
+  {
+   "image": "052.JPG",
+   "label": 1,
+   "full": 34.544,
+   "sam": 32.159
+  },
+  {
+   "image": "006.JPG",
+   "label": 1,
+   "full": 37.659,
+   "sam": 36.162
+  },
+  {
+   "image": "056.JPG",
+   "label": 1,
+   "full": 32.868,
+   "sam": 32.868
+  },
+  {
+   "image": "063.JPG",
+   "label": 1,
+   "full": 33.819,
+   "sam": 28.185
+  },
+  {
+   "image": "096.JPG",
+   "label": 1,
+   "full": 36.43,
+   "sam": 36.43
+  },
+  {
+   "image": "001.JPG",
+   "label": 1,
+   "full": 36.93,
+   "sam": 36.93
+  },
+  {
+   "image": "009.JPG",
+   "label": 1,
+   "full": 40.598,
+   "sam": 40.598
+  },
+  {
+   "image": "070.JPG",
+   "label": 1,
+   "full": 33.826,
+   "sam": 33.826
+  },
+  {
+   "image": "080.JPG",
+   "label": 1,
+   "full": 34.276,
+   "sam": 31.98
+  },
+  {
+   "image": "091.JPG",
+   "label": 1,
+   "full": 43.265,
+   "sam": 43.265
+  },
+  {
+   "image": "030.JPG",
+   "label": 1,
+   "full": 39.509,
+   "sam": 39.509
+  },
+  {
+   "image": "085.JPG",
+   "label": 1,
+   "full": 37.295,
+   "sam": 37.295
+  },
+  {
+   "image": "061.JPG",
+   "label": 1,
+   "full": 34.426,
+   "sam": 31.392
+  },
+  {
+   "image": "082.JPG",
+   "label": 1,
+   "full": 36.563,
+   "sam": 32.62
+  },
+  {
+   "image": "049.JPG",
+   "label": 1,
+   "full": 35.718,
+   "sam": 32.328
+  },
+  {
+   "image": "092.JPG",
+   "label": 1,
+   "full": 33.822,
+   "sam": 31.391
+  },
+  {
+   "image": "039.JPG",
+   "label": 1,
+   "full": 35.121,
+   "sam": 35.121
+  },
+  {
+   "image": "038.JPG",
+   "label": 1,
+   "full": 40.755,
+   "sam": 40.755
+  },
+  {
+   "image": "094.JPG",
+   "label": 1,
+   "full": 40.961,
+   "sam": 40.961
+  },
+  {
+   "image": "025.JPG",
+   "label": 1,
+   "full": 34.529,
+   "sam": 34.529
+  },
+  {
+   "image": "090.JPG",
+   "label": 1,
+   "full": 45.021,
+   "sam": 45.021
+  },
+  {
+   "image": "044.JPG",
+   "label": 1,
+   "full": 35.354,
+   "sam": 35.354
+  },
+  {
+   "image": "067.JPG",
+   "label": 1,
+   "full": 30.978,
+   "sam": 30.916
+  },
+  {
+   "image": "026.JPG",
+   "label": 1,
+   "full": 34.168,
+   "sam": 31.131
+  },
+  {
+   "image": "010.JPG",
+   "label": 1,
+   "full": 35.809,
+   "sam": 35.809
+  },
+  {
+   "image": "047.JPG",
+   "label": 1,
+   "full": 32.082,
+   "sam": 29.629
+  },
+  {
+   "image": "024.JPG",
+   "label": 1,
+   "full": 33.59,
+   "sam": 30.863
+  },
+  {
+   "image": "005.JPG",
+   "label": 1,
+   "full": 38.777,
+   "sam": 38.777
+  },
+  {
+   "image": "066.JPG",
+   "label": 1,
+   "full": 32.291,
+   "sam": 31.002
+  },
+  {
+   "image": "003.JPG",
+   "label": 1,
+   "full": 34.594,
+   "sam": 34.594
+  },
+  {
+   "image": "032.JPG",
+   "label": 1,
+   "full": 35.282,
+   "sam": 35.282
+  },
+  {
+   "image": "098.JPG",
+   "label": 1,
+   "full": 34.032,
+   "sam": 34.032
+  },
+  {
+   "image": "058.JPG",
+   "label": 1,
+   "full": 34.103,
+   "sam": 33.253
+  },
+  {
+   "image": "068.JPG",
+   "label": 1,
+   "full": 33.224,
+   "sam": 33.224
+  },
+  {
+   "image": "041.JPG",
+   "label": 1,
+   "full": 37.369,
+   "sam": 37.369
+  },
+  {
+   "image": "040.JPG",
+   "label": 1,
+   "full": 38.499,
+   "sam": 38.499
+  },
+  {
+   "image": "0994.JPG",
+   "label": 0,
+   "full": 37.281,
+   "sam": 29.473
+  },
+  {
+   "image": "0755.JPG",
+   "label": 0,
+   "full": 32.049,
+   "sam": 30.659
+  },
+  {
+   "image": "0996.JPG",
+   "label": 0,
+   "full": 34.178,
+   "sam": 29.949
+  },
+  {
+   "image": "0796.JPG",
+   "label": 0,
+   "full": 33.735,
+   "sam": 30.527
+  },
+  {
+   "image": "0514.JPG",
+   "label": 0,
+   "full": 32.418,
+   "sam": 29.103
+  },
+  {
+   "image": "0657.JPG",
+   "label": 0,
+   "full": 34.088,
+   "sam": 33.572
+  },
+  {
+   "image": "0790.JPG",
+   "label": 0,
+   "full": 31.162,
+   "sam": 30.418
+  },
+  {
+   "image": "0394.JPG",
+   "label": 0,
+   "full": 41.819,
+   "sam": 34.848
+  },
+  {
+   "image": "0552.JPG",
+   "label": 0,
+   "full": 34.98,
+   "sam": 31.976
+  },
+  {
+   "image": "0654.JPG",
+   "label": 0,
+   "full": 35.175,
+   "sam": 30.226
+  },
+  {
+   "image": "0705.JPG",
+   "label": 0,
+   "full": 31.977,
+   "sam": 29.637
+  },
+  {
+   "image": "0174.JPG",
+   "label": 0,
+   "full": 31.199,
+   "sam": 30.296
+  },
+  {
+   "image": "0545.JPG",
+   "label": 0,
+   "full": 35.287,
+   "sam": 31.784
+  },
+  {
+   "image": "0768.JPG",
+   "label": 0,
+   "full": 32.555,
+   "sam": 28.609
+  },
+  {
+   "image": "0159.JPG",
+   "label": 0,
+   "full": 35.929,
+   "sam": 30.335
+  },
+  {
+   "image": "0286.JPG",
+   "label": 0,
+   "full": 35.106,
+   "sam": 31.609
+  },
+  {
+   "image": "0215.JPG",
+   "label": 0,
+   "full": 33.906,
+   "sam": 28.877
+  },
+  {
+   "image": "0569.JPG",
+   "label": 0,
+   "full": 38.8,
+   "sam": 32.587
+  },
+  {
+   "image": "0196.JPG",
+   "label": 0,
+   "full": 31.11,
+   "sam": 30.362
+  },
+  {
+   "image": "0024.JPG",
+   "label": 0,
+   "full": 31.189,
+   "sam": 30.132
+  },
+  {
+   "image": "0520.JPG",
+   "label": 0,
+   "full": 30.88,
+   "sam": 29.873
+  },
+  {
+   "image": "0811.JPG",
+   "label": 0,
+   "full": 37.932,
+   "sam": 37.878
+  },
+  {
+   "image": "0688.JPG",
+   "label": 0,
+   "full": 35.474,
+   "sam": 31.042
+  },
+  {
+   "image": "0735.JPG",
+   "label": 0,
+   "full": 34.775,
+   "sam": 32.717
+  },
+  {
+   "image": "0013.JPG",
+   "label": 0,
+   "full": 32.105,
+   "sam": 30.498
+  },
+  {
+   "image": "0208.JPG",
+   "label": 0,
+   "full": 35.75,
+   "sam": 30.79
+  },
+  {
+   "image": "0261.JPG",
+   "label": 0,
+   "full": 38.006,
+   "sam": 32.329
+  },
+  {
+   "image": "0764.JPG",
+   "label": 0,
+   "full": 30.168,
+   "sam": 29.023
+  },
+  {
+   "image": "0920.JPG",
+   "label": 0,
+   "full": 36.908,
+   "sam": 30.029
+  },
+  {
+   "image": "0674.JPG",
+   "label": 0,
+   "full": 36.576,
+   "sam": 31.027
+  },
+  {
+   "image": "0797.JPG",
+   "label": 0,
+   "full": 34.442,
+   "sam": 32.839
+  },
+  {
+   "image": "0525.JPG",
+   "label": 0,
+   "full": 33.51,
+   "sam": 31.348
+  },
+  {
+   "image": "0967.JPG",
+   "label": 0,
+   "full": 30.955,
+   "sam": 29.683
+  },
+  {
+   "image": "0484.JPG",
+   "label": 0,
+   "full": 38.929,
+   "sam": 35.593
+  },
+  {
+   "image": "0479.JPG",
+   "label": 0,
+   "full": 32.036,
+   "sam": 31.572
+  },
+  {
+   "image": "0694.JPG",
+   "label": 0,
+   "full": 32.401,
+   "sam": 29.731
+  },
+  {
+   "image": "0107.JPG",
+   "label": 0,
+   "full": 41.388,
+   "sam": 40.442
+  },
+  {
+   "image": "0377.JPG",
+   "label": 0,
+   "full": 33.426,
+   "sam": 29.768
+  },
+  {
+   "image": "0333.JPG",
+   "label": 0,
+   "full": 30.993,
+   "sam": 28.284
+  },
+  {
+   "image": "0427.JPG",
+   "label": 0,
+   "full": 35.17,
+   "sam": 34.265
+  },
+  {
+   "image": "0844.JPG",
+   "label": 0,
+   "full": 37.985,
+   "sam": 29.906
+  },
+  {
+   "image": "0730.JPG",
+   "label": 0,
+   "full": 35.9,
+   "sam": 30.353
+  },
+  {
+   "image": "0923.JPG",
+   "label": 0,
+   "full": 35.68,
+   "sam": 35.68
+  },
+  {
+   "image": "0935.JPG",
+   "label": 0,
+   "full": 33.868,
+   "sam": 31.009
+  },
+  {
+   "image": "0871.JPG",
+   "label": 0,
+   "full": 35.969,
+   "sam": 35.063
+  },
+  {
+   "image": "0363.JPG",
+   "label": 0,
+   "full": 32.792,
+   "sam": 32.072
+  },
+  {
+   "image": "0518.JPG",
+   "label": 0,
+   "full": 36.72,
+   "sam": 29.329
+  },
+  {
+   "image": "0751.JPG",
+   "label": 0,
+   "full": 37.152,
+   "sam": 32.335
+  },
+  {
+   "image": "0964.JPG",
+   "label": 0,
+   "full": 38.358,
+   "sam": 32.076
+  },
+  {
+   "image": "0187.JPG",
+   "label": 0,
+   "full": 41.909,
+   "sam": 36.708
+  }
+ ]
+}
