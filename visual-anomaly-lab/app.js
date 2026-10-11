@@ -27,7 +27,6 @@ function applyLanguage() {
     if (el.id === 'filename' && input) return;
     el.textContent = t(el.dataset.i18n);
   });
-  for (const id of ['signals-link', 'signals-footer']) $(id).href = 'https://signals.lizheng.cc/' + lang;
   $('pointcount').textContent = t('points_count', { n: points.length });
   document.querySelectorAll('.sample').forEach(b => {
     const label = t(b.dataset.label);
