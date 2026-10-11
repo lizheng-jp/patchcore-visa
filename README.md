@@ -4,6 +4,10 @@ PatchCore anomaly detection on the public [VisA](https://github.com/amazon-scien
 
 **Live demo:** [vision.lizheng.cc](https://vision.lizheng.cc/) (English / 日本語). Run the model on test images or your own upload, see each model's held-out score distribution, and try EfficientSAM masking. Source in [`visual-anomaly-lab/`](visual-anomaly-lab/).
 
+[![Vision demo: a Macaroni2 normal image is flagged on the full image (37.28, anomalous) but scored normal inside the EfficientSAM foreground (29.47)](docs/figures/demo_workspace.jpg)](https://vision.lizheng.cc/?model=macaroni2)
+
+*The live demo on a Macaroni2 normal image: the full-image heatmap peaks on the mat (false alarm), and scoring only inside the four clicked pasta pieces brings it below the validation-selected threshold.*
+
 ## Why this project
 
 I previously built a segmentation + PatchCore inspection pipeline on proprietary manufacturing data. Re-examining that work showed two common evaluation mistakes: random image-level splits that leak lots and devices across train and test, and decision thresholds tuned on the test set. This repository rebuilds the evaluation on open data, from scratch, with those mistakes designed out, and tests whether SAM foreground masking actually helps.
@@ -30,6 +34,10 @@ Setting: anomalib 2.7 PatchCore (Wide ResNet-50, layer2+3, 256×256 resize witho
 | Test F1, threshold = Youden J on val | 0.812 (recall 0.77, specificity 0.89) |
 | Image AUROC with SAM post-hoc masking | 0.905 → **0.931** |
 | Inference per image | GPU 7–15 ms; CPU (4 threads) 1.1–2.2 s |
+
+Every held-out PCB4 test image in the demo, scored by its 200-image model, against the threshold chosen on validation:
+
+![PCB4 held-out test scores: normal images cluster below the threshold, anomalous images above it, with 5 false alarms out of 51 and 1 miss out of 50](docs/figures/demo_scores.jpg)
 
 ### Per category
 
