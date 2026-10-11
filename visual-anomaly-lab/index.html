@@ -151,5 +151,15 @@
 </footer>
 <script src="/i18n.js"></script>
 <script src="/app.js"></script>
+<script>
+  // Cloudflare Web Analytics (cookieless). Only the public deployment reports; local runs and forks send nothing.
+  if (location.hostname === 'vision.lizheng.cc') {
+    const beacon = document.createElement('script');
+    beacon.defer = true;
+    beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    beacon.dataset.cfBeacon = JSON.stringify({ token: '7368c2ca223a4e958680ce3c01e57dd4' });
+    document.body.appendChild(beacon);
+  }
+</script>
 </body>
 </html>
