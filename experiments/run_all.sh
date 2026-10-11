@@ -18,7 +18,7 @@ SMALL_DEFECT_CATS="candle,capsules,pcb1,pcb4"
 PHASES="${*:-E0 E1 E2 E3 E4 SUMMARY}"
 mkdir -p $R/logs
 
-run() { echo ">>> $*" | tee -a $R/logs/commands.log; "$@" 2>&1 | grep -v -i warn | tee -a "$R/logs/$LOG.log"; }
+run() { echo ">>> $*" | tee -a $R/logs/commands.log; "$@" 2>&1 | grep --line-buffered -v -i warn | tee -a "$R/logs/$LOG.log"; }
 
 for phase in $PHASES; do case $phase in
 

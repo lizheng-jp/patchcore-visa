@@ -1,0 +1,78 @@
+{
+  "samples": [
+    {
+      "sample": 0,
+      "image": "candle/Data/Images/Normal/0483.JPG",
+      "reference_score": 30.173323,
+      "actual_score": 30.17325782775879,
+      "absolute_difference": 6.517224121083132e-05,
+      "decision": "anomalous",
+      "elapsed_seconds": 1.66
+    },
+    {
+      "sample": 1,
+      "image": "candle/Data/Images/Normal/0427.JPG",
+      "reference_score": 29.412094,
+      "actual_score": 29.412109375,
+      "absolute_difference": 1.5375000000261707e-05,
+      "decision": "anomalous",
+      "elapsed_seconds": 0.14
+    },
+    {
+      "sample": 2,
+      "image": "candle/Data/Images/Normal/0674.JPG",
+      "reference_score": 25.324249,
+      "actual_score": 25.32423973083496,
+      "absolute_difference": 9.26916503729558e-06,
+      "decision": "normal",
+      "elapsed_seconds": 0.18
+    },
+    {
+      "sample": 3,
+      "image": "candle/Data/Images/Anomaly/073.JPG",
+      "reference_score": 36.684589,
+      "actual_score": 36.68454360961914,
+      "absolute_difference": 4.539038086193159e-05,
+      "decision": "anomalous",
+      "elapsed_seconds": 0.92,
+      "sam": {
+        "score": 35.286476135253906,
+        "baseline_score": 35.286476135253906,
+        "foreground_fraction": 0.3604736328125
+      }
+    },
+    {
+      "sample": 4,
+      "image": "candle/Data/Images/Anomaly/050.JPG",
+      "reference_score": 31.041836,
+      "actual_score": 31.04178810119629,
+      "absolute_difference": 4.789880371092181e-05,
+      "decision": "anomalous",
+      "elapsed_seconds": 0.14
+    },
+    {
+      "sample": 5,
+      "image": "candle/Data/Images/Anomaly/069.JPG",
+      "reference_score": 31.635899,
+      "actual_score": 31.635835647583008,
+      "absolute_difference": 6.335241699062522e-05,
+      "decision": "anomalous",
+      "elapsed_seconds": 0.14
+    }
+  ],
+  "invalid_requests": "2 returned HTTP 400",
+  "scope": "six fixed candle test examples, not a new accuracy evaluation",
+  "browser_checks": [
+    "selected anomalous sample 073.JPG and ran real inference",
+    "placed four positive EfficientSAM prompts",
+    "object mask displayed 36.3 percent foreground",
+    "pixel slider changed from 23.1 to 30.0 and region updated"
+  ],
+  "preview": "preview.jpg",
+  "localization_checks": [
+    "English interface, sample labels and real inference result verified in browser",
+    "Japanese switch translated result and status while preserving image 073.JPG and score 36.685",
+    "README provides English and Japanese instructions",
+    "Backend returns language-neutral prediction values and error codes"
+  ]
+}

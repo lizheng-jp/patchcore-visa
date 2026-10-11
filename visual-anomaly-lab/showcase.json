@@ -1,0 +1,36 @@
+{
+  "candle": {
+    "display_range": [17, 36],
+    "samples": [
+      {"image": "candle/Data/Images/Normal/0569.JPG", "label": "normal"},
+      {"image": "candle/Data/Images/Normal/0484.JPG", "label": "normal"},
+      {"image": "candle/Data/Images/Normal/0892.JPG", "label": "normal"},
+      {"image": "candle/Data/Images/Anomaly/060.JPG", "label": "anomalous"},
+      {"image": "candle/Data/Images/Anomaly/073.JPG", "label": "anomalous"},
+      {"image": "candle/Data/Images/Anomaly/065.JPG", "label": "anomalous"}
+    ]
+  },
+  "pcb4": {
+    "display_range": [21, 42],
+    "samples": [
+      {"image": "pcb4/Data/Images/Normal/0811.JPG", "label": "normal"},
+      {"image": "pcb4/Data/Images/Normal/0525.JPG", "label": "normal"},
+      {"image": "pcb4/Data/Images/Normal/0303.JPG", "label": "normal"},
+      {"image": "pcb4/Data/Images/Anomaly/055.JPG", "label": "anomalous"},
+      {"image": "pcb4/Data/Images/Anomaly/003.JPG", "label": "anomalous"},
+      {"image": "pcb4/Data/Images/Anomaly/014.JPG", "label": "anomalous"}
+    ]
+  },
+  "macaroni2": {
+    "display_range": [24, 40],
+    "sam_thresholds": {"full": 32.4, "sam": 31.023},
+    "samples": [
+      {"image": "macaroni2/Data/Images/Normal/0994.JPG", "label": "normal"},
+      {"image": "macaroni2/Data/Images/Normal/0518.JPG", "label": "normal"},
+      {"image": "macaroni2/Data/Images/Normal/0920.JPG", "label": "normal"},
+      {"image": "macaroni2/Data/Images/Anomaly/090.JPG", "label": "anomalous"},
+      {"image": "macaroni2/Data/Images/Anomaly/038.JPG", "label": "anomalous"},
+      {"image": "macaroni2/Data/Images/Anomaly/059.JPG", "label": "anomalous"}
+    ]
+  }
+}
