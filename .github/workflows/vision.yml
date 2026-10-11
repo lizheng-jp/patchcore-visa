@@ -1,0 +1,172 @@
+name: Vision
+
+# CI on every pull request and push; on main, also publish the demo image to GHCR and
+# deploy it to the shared Lightsail host. Model weights, memory banks and samples stay on
+# the server (mounted read-only), so the image holds code only.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vision-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}-vision
+
+jobs:
+  test:
+    name: Tests and checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests (evaluation protocol)
+        run: |
+          pip install --quiet numpy scikit-learn
+          python -m unittest discover -s tests -v
+      - name: Syntax checks (demo server, tools, page scripts)
+        run: |
+          python -m py_compile visual-anomaly-lab/server.py visual-anomaly-lab/tools/*.py scripts/*.py
+          node --check visual-anomaly-lab/app.js
+          node --check visual-anomaly-lab/i18n.js
+          python -c "import json; [json.load(open(f'visual-anomaly-lab/{f}')) for f in ('showcase.json', 'sam-study.json', 'recorded-experiments.json')]"
+
+  image:
+    name: Build image
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      changed: ${{ steps.changes.outputs.vision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Did the demo change?
+        id: changes
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          # Compare the whole push (or PR); a new branch or manual run counts as changed.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -z "$BASE" ] || \
+             ! git cat-file -e "$BASE^{commit}" 2>/dev/null || \
+             git diff --name-only "$BASE" HEAD | grep -qE '^(visual-anomaly-lab/|\.github/workflows/vision\.yml)'; then
+            echo "vision=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "vision=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: docker/setup-buildx-action@v3
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build (and push on main)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./visual-anomaly-lab
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' && steps.changes.outputs.vision == 'true' }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          tags: |
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
+          cache-from: type=gha,scope=vision
+          cache-to: type=gha,mode=max,scope=vision
+
+  deploy:
+    name: Deploy to server
+    needs: image
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.image.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      packages: read
+    concurrency:
+      group: vision-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            visual-anomaly-lab/compose.prod.yml
+            visual-anomaly-lab/deploy/Caddyfile.vision
+          sparse-checkout-cone-mode: false
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Pull image, restart and sync the Caddy site
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          VISION_PATH: ${{ secrets.VISION_PATH }}
+          SIGNALS_PATH: ${{ secrets.SIGNALS_PATH }}
+          VISION_IMAGE: ${{ env.IMAGE }}:${{ github.sha }}
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SSH="ssh -i $HOME/.ssh/deploy_key -o BatchMode=yes $DEPLOY_USER@$DEPLOY_HOST"
+          SCP="scp -i $HOME/.ssh/deploy_key -o BatchMode=yes"
+          $SCP visual-anomaly-lab/compose.prod.yml "$DEPLOY_USER@$DEPLOY_HOST:$VISION_PATH/compose.prod.yml.new"
+          $SCP visual-anomaly-lab/deploy/Caddyfile.vision "$DEPLOY_USER@$DEPLOY_HOST:$VISION_PATH/vision.caddy.new"
+
+          # The job token is passed on stdin and removed with docker logout, so it is never stored.
+          printf '%s\n' "$GHCR_TOKEN" | $SSH "set -eu
+            cd '$VISION_PATH'
+            docker login ghcr.io -u '$GHCR_USER' --password-stdin >/dev/null
+            trap 'docker logout ghcr.io >/dev/null' EXIT
+            cp compose.prod.yml compose.prod.yml.bak 2>/dev/null || true
+            mv compose.prod.yml.new compose.prod.yml
+            export VISION_IMAGE='$VISION_IMAGE'
+            docker compose -f compose.prod.yml pull --quiet
+            docker compose -f compose.prod.yml up -d --no-build
+            for i in \$(seq 1 30); do
+              curl -fsS http://127.0.0.1:8766/api/health >/dev/null && break
+              [ \$i = 30 ] && { echo 'Vision did not become healthy'; exit 1; }
+              sleep 4
+            done
+            docker image prune -f >/dev/null"
+
+          # Vision's site lives in Signals' deploy/sites (imported by its Caddyfile, never
+          # touched by Signals deploys). Reload Caddy only if the site changed and validates.
+          $SSH "set -eu
+            cd '$SIGNALS_PATH'
+            [ -w deploy/sites ] || sudo -n install -d -o \"\$(id -un)\" -g \"\$(id -gn)\" deploy/sites
+            rm -f '$VISION_PATH/vision.caddy.bak'
+            if ! cmp -s '$VISION_PATH/vision.caddy.new' deploy/sites/vision.caddy; then
+              [ -f deploy/sites/vision.caddy ] && cp deploy/sites/vision.caddy '$VISION_PATH/vision.caddy.bak'
+              cat '$VISION_PATH/vision.caddy.new' > deploy/sites/vision.caddy
+              if ! docker compose -f docker-compose.prod.yml exec -T caddy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile; then
+                if [ -f '$VISION_PATH/vision.caddy.bak' ]; then cat '$VISION_PATH/vision.caddy.bak' > deploy/sites/vision.caddy; else rm -f deploy/sites/vision.caddy; fi
+                echo 'Caddy validation failed; previous site restored'; exit 1
+              fi
+              docker compose -f docker-compose.prod.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+            fi
+            rm -f '$VISION_PATH/vision.caddy.new'"
+
+      - name: Check the public site
+        run: |
+          for _ in $(seq 1 12); do
+            curl -fsS https://vision.lizheng.cc/api/health && exit 0
+            sleep 5
+          done
+          echo "https://vision.lizheng.cc/api/health is not responding"; exit 1
