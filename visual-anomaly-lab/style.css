@@ -1,4 +1,4 @@
-/* Holographic Light, matching Signals (signals.lizheng.cc) so the two demos read as one portfolio. */
+/* Holographic Light design tokens. */
 :root {
   --canvas: #f3f5fb;
   --surface: rgb(255 255 255 / .72);
@@ -53,10 +53,6 @@ button, select, input { font: inherit }
 .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); min-width: 0 }
 .brand b { display: block; font-size: 15px; letter-spacing: -.01em; white-space: nowrap }
 .brand .kicker { display: block; font-size: 9.5px }
-.projects { display: flex; gap: 4px; margin-left: 12px; padding: 4px; border-radius: 12px; background: rgb(238 242 250 / .7); border: 1px solid var(--line) }
-.projects a { font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-2); padding: 6px 12px; border-radius: 9px; white-space: nowrap }
-.projects a:hover { background: rgb(255 255 255 / .7) }
-.projects a[aria-current] { background: #fff; color: var(--ink); font-weight: 600; box-shadow: var(--shadow) }
 .header-tools { margin-left: auto; display: flex; align-items: center; gap: 10px }
 .icon-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight: 500; padding: 7px 10px; border-radius: 10px }
 .icon-link:hover { background: rgb(255 255 255 / .7) }
@@ -192,15 +188,12 @@ footer p { margin: 0 0 6px }
   .workspace, .study, .archive-grid, footer .card { grid-template-columns: 1fr }
   .samples { grid-template-columns: repeat(6, 1fr) }
   .metrics { grid-template-columns: 1fr 1fr }
-  .projects a.repo, .icon-link span { display: none }
-  .cases { grid-template-columns: 1fr }
+    .cases { grid-template-columns: 1fr }
 }
 @media (max-width: 560px) {
   .site-header .inner { padding: 0 16px; gap: 10px }
   .brand .kicker { display: none }
-  .projects { margin-left: 0 }
-  .projects a { padding: 6px 8px; font-size: 12px }
-  main { padding: 28px 16px 48px }
+      main { padding: 28px 16px 48px }
   footer { padding: 0 16px 40px }
   .card { padding: 18px; border-radius: 16px }
   .samples { grid-template-columns: repeat(3, 1fr) }

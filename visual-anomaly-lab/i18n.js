@@ -1,7 +1,5 @@
 const translations = {
   en: {
-    nav_signals: "Signals",
-    nav_lab: "Anomaly Lab",
     eyebrow: "Computer vision · PatchCore · VisA",
     title1: "Learn only what normal looks like,",
     title2: "then find what isn't.",
@@ -95,7 +93,6 @@ const translations = {
     role: "Full-stack engineer · applied ML · Osaka",
     about: "I built this to re-evaluate an inspection pipeline I once shipped: leakage-free splits, thresholds selected on validation only, and an honest look at when SAM masking helps and when it hurts.",
     link_repo: "Source & evaluation (GitHub)",
-    link_signals: "Signals: developer-productivity analytics demo",
     evidence: "Evidence & scope",
     model_evidence: "Live model: VisA {category}, {train} normal training images, {bank} reference features, Wide ResNet-50 layer2+3, CPU inference. Scores are kNN distances, not probabilities.",
     evidence2: "Heatmaps use a fixed colour range per category. SAM \"Whole object\" picks the largest candidate per point covering ≤40% of the image; check the mask, it can omit defects. Uploaded images are processed in memory and not stored.",
@@ -133,8 +130,6 @@ const translations = {
     model_unavailable: "Model is not available."
   },
   ja: {
-    nav_signals: "Signals",
-    nav_lab: "Anomaly Lab",
     eyebrow: "Computer vision · PatchCore · VisA",
     title1: "正常だけを学び、",
     title2: "正常でないものを見つける。",
@@ -228,7 +223,6 @@ const translations = {
     role: "Full-stack engineer · applied ML · Osaka",
     about: "以前に開発した外観検査パイプラインを再評価するために作りました。データリークのない分割、検証データだけで選ぶしきい値、そして SAM マスクが効く場面と逆効果になる場面を正直に示しています。",
     link_repo: "ソースコードと評価（GitHub）",
-    link_signals: "Signals：開発生産性分析デモ",
     evidence: "根拠と適用範囲",
     model_evidence: "実推論モデル：VisA {category}・正常学習画像 {train} 枚・参照特徴 {bank} 個・Wide ResNet-50 layer2+3・CPU 推論。スコアは kNN 距離であり、確率ではありません。",
     evidence2: "ヒートマップの色範囲はカテゴリごとに固定です。SAM の「物体全体」は各提示点で画像面積の40%以下の最大候補を選びます。欠陥が除外される場合があるため、マスクを確認してください。アップロード画像はメモリ内で処理し、保存しません。",

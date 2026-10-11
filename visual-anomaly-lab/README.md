@@ -1,6 +1,6 @@
 # Visual Anomaly Lab
 
-Live PatchCore inference on three VisA categories (candle, pcb4, macaroni2), a held-out score chart for each model, and an EfficientSAM foreground-masking study. Live at [vision.lizheng.cc](https://vision.lizheng.cc/). Styled to match [Signals](https://signals.lizheng.cc); the two demos link to each other.
+Live PatchCore inference on three VisA categories (candle, pcb4, macaroni2), a held-out score chart for each model, and an EfficientSAM foreground-masking study. Live at [vision.lizheng.cc](https://vision.lizheng.cc/).
 
 ## Run locally
 
