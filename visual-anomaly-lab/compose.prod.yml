@@ -1,7 +1,8 @@
 name: vision-demo
 services:
   vision:
-    image: visual-anomaly-lab:20261011-nolinks
+    # CD sets VISION_IMAGE to the commit tag; a manual `up` falls back to latest.
+    image: ${VISION_IMAGE:-ghcr.io/lizheng-jp/patchcore-visa-vision:latest}
     restart: unless-stopped
     ports:
       - "127.0.0.1:8766:8766"
