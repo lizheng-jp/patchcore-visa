@@ -1,7 +1,7 @@
 name: vision-demo
 services:
   vision:
-    image: visual-anomaly-lab:20261011-layout1
+    image: visual-anomaly-lab:20261011-nolinks
     restart: unless-stopped
     ports:
       - "127.0.0.1:8766:8766"
