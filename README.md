@@ -1,6 +1,6 @@
 # patchcore-visa
 
-PatchCore anomaly detection on the public [VisA](https://github.com/amazon-science/spot-diff) dataset, evaluated with a protocol designed to avoid optimistic results, plus an ablation of SAM foreground masking.
+Reproduces, on the public [VisA](https://github.com/amazon-science/spot-diff) dataset, a finding from my manufacturing inspection work: **when false alarms come from the background, separating the object with SAM before PatchCore scoring improves anomaly detection.** The evaluation is leakage-free, and it also shows where the effect does not hold.
 
 **Live demo:** [vision.lizheng.cc](https://vision.lizheng.cc/) (English / 日本語). Run the model on test images or your own upload, see each model's held-out score distribution, and try EfficientSAM masking. Source in [`visual-anomaly-lab/`](visual-anomaly-lab/).
 
@@ -10,7 +10,11 @@ PatchCore anomaly detection on the public [VisA](https://github.com/amazon-scien
 
 ## Why this project
 
-I previously built a segmentation + PatchCore inspection pipeline on proprietary manufacturing data. Re-examining that work showed two common evaluation mistakes: random image-level splits that leak lots and devices across train and test, and decision thresholds tuned on the test set. This repository rebuilds the evaluation on open data, from scratch, with those mistakes designed out, and tests whether SAM foreground masking actually helps.
+At my previous company I built a SAM segmentation + PatchCore inspection pipeline for camera-module images. Position, background and lighting varied between images, and the anomaly detector raised false alarms on the background; separating the component with SAM before scoring improved accuracy. That data and its results belong to the company, so this repository reproduces the finding on open data: **in a scenario where the background causes false alarms, does SAM background removal improve anomaly detection, and under what conditions?**
+
+A reproduction is only as credible as its evaluation. Re-examining the original work showed two common mistakes: random image-level splits that leak lots and devices across train and test, and decision thresholds tuned on the test set. The protocol below designs both out.
+
+**Result in brief:** in the matching scenario (Macaroni: small objects on a textured mat, where most false alarms are on the background), masking raised image AUROC by +0.13 to +0.16, and on the live demo model it cut false alarms from 38 to 23 of 50 normal images while keeping 99.9% of defect pixels. Where the mask cuts into defects or splits touching objects (Fryum, Capsules), it does not help (about −0.03), and on the demo model missed defects rose from 6 to 9.
 
 ## Evaluation protocol
 
