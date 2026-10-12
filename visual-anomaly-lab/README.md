@@ -1,6 +1,6 @@
 # Visual Anomaly Lab
 
-Live PatchCore inference on three VisA categories (candle, pcb4, macaroni2), a held-out score chart for each model, and an EfficientSAM foreground-masking study. Live at [vision.lizheng.cc](https://vision.lizheng.cc/).
+Live demo for reproducing, on public data, a finding from manufacturing inspection: where false alarms come from the background, SAM background removal improves anomaly detection. PatchCore inference on three VisA categories (candle, pcb4, macaroni2), a held-out score chart for each model, and an EfficientSAM masking study on Macaroni2. Live at [vision.lizheng.cc](https://vision.lizheng.cc/).
 
 ## Run locally
 
