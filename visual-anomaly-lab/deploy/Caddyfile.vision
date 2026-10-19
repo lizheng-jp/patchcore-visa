@@ -1,4 +1,14 @@
 vision.lizheng.cc {
+  # Access log for the owner's own visit summaries (IP, path, referrer, user agent).
+  # Rolled at 20 MiB and deleted after 30 days.
+  log {
+    output file /data/access/vision.log {
+      roll_size 20MiB
+      roll_keep 10
+      roll_keep_for 720h
+    }
+  }
+
   encode zstd gzip
   request_body {
     max_size 16MB
