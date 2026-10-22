@@ -28,6 +28,10 @@ STATIC = {
     '/sam-study.json': ('sam-study.json', 'application/json; charset=utf-8'),
 }
 CASE_DIR = ROOT / 'cases'
+# Uploads are decoded only as the formats the page offers. Pillow otherwise picks a decoder from the file
+# contents, so a request could reach TIFF, GIF, MSP, XBM and other decoders with known parsing bugs.
+UPLOAD_FORMATS = ['JPEG', 'PNG', 'WEBP', 'BMP']
+MAX_UPLOAD_PIXELS = 50_000_000  # rejected before decoding; a 48 MP phone photo still fits
 
 
 def model_info(category):
@@ -199,7 +203,10 @@ class Handler(BaseHTTPRequestHandler):
                 im = Image.open(ROOT / 'samples' / items[data['sample']]['image']).convert('RGB')
             else:
                 raw = base64.b64decode(data['image'].split(',', 1)[1], validate=True)
-                im = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))); im.load(); im = im.convert('RGB')
+                im = Image.open(io.BytesIO(raw), formats=UPLOAD_FORMATS)
+                if im.width * im.height > MAX_UPLOAD_PIXELS:
+                    raise ValueError('bad_size')
+                im = ImageOps.exif_transpose(im); im.load(); im = im.convert('RGB')
             points = data.get('points', [])
             if not isinstance(points, list) or len(points) > 16 or any(
                     not isinstance(p, list) or len(p) != 2 or any(not isinstance(v, (int, float)) or not np.isfinite(v) or v < 0 or v > 255 for v in p)
